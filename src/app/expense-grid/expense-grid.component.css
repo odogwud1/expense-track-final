@@ -1,0 +1,43 @@
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mat-mdc-header-row{
+  background-color: #767676; 
+}
+
+.card-header {
+  margin-bottom: 16px; 
+  display: flex;
+}
+
+.card-content {
+  margin-bottom: 24px; 
+}
+
+.card {
+  padding-bottom: 24px; 
+}
+
+.expense-table {
+  width: 100%;
+  margin: auto;
+}
+
+#edit-button {
+  margin-right: 16px;
+  align-items: center;
+}
+
+.action-buttons {
+  justify-content: flex-start; 
+  align-items: center;      
+  gap: 8px;  
+}               
+
+#delete-button {
+  background-color: #f44336;
+  min-width: 0;
+}
+

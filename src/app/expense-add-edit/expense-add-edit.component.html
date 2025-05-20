@@ -1,0 +1,69 @@
+<mat-card class="add-edit-card">
+    <mat-card-header>
+        <mat-card-title>{{ isEditMode ? 'Edit Expense' : 'Add Expense' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <div class="form-row">
+                    <mat-form-field>
+                        <mat-label>Enter Title</mat-label>
+                        <input matInput formControlName="title" placeholder="Enter Title" />
+                        <mat-error *ngIf="expenseForm.get('title')?.hasError('required')">
+                            Title is required
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                    <mat-form-field>
+                        <mat-label>Enter Amount</mat-label>
+                        <input matInput type="number" formControlName="amount" placeholder="Enter Amount"/>
+                        <mat-error *ngIf="expenseForm.get('amount')?.hasError('required')">
+                            Amount is required
+                        </mat-error>
+                        <mat-error *ngIf="expenseForm.get('amount')?.hasError('min')">
+                            Amount should be a positive number
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <div class="form-row">
+                    <mat-form-field>
+                        <mat-label>Select a Category</mat-label>
+                        <mat-select formControlName="category" placeholder="Select a Category">
+                            <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="expenseForm.get('category')?.hasError('required')">
+                            Select a category
+                        </mat-error>
+                        
+                    </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                    <mat-form-field>
+                        <mat-label>Select a Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Select a Date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="expenseForm.get('date')?.hasError('required')">
+                            Select a Date
+                        </mat-error>
+                        
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </form>            
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="expenseForm.invalid" id="add-button">{{ isEditMode ? 'Edit' : 'Add' }}</button>
+        <button mat-flat-button color="warn" (click)="onClear()" id="clear-button">Clear</button>
+        <button mat-flat-button color="warn" (click)="onCancel()" id="cancel-button">Cancel</button>
+    </mat-card-actions>
+
+
+</mat-card>

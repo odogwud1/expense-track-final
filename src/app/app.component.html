@@ -1,0 +1,20 @@
+<mat-sidenav-container class="sidebar-container">
+  <mat-sidenav #sidenav mode="side" opened="true" class="sidenav">
+    <mat-nav-list>
+      <mat-list-item routerLink="/dashboard"> Dashboard </mat-list-item>
+      <mat-list-item routerLink="/add-expense"> Add an Expense </mat-list-item>
+      <mat-list-item routerLink="/list"> Expenses </mat-list-item>
+      <mat-list-item routerLink="/contact"> Contact Us </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">Expense Tracker</span>
+    </mat-toolbar>  
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
