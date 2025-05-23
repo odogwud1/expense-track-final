@@ -1,11 +1,67 @@
 {
   "expenses": [
     {
-      "title": "Water",
-      "category": "Food",
-      "amount": 20,
-      "date": "2025-05-19T23:00:00.000Z",
+      "title": "Shoes",
+      "category": "Shopping",
+      "amount": 1000,
+      "date": "1970-02-02T23:00:00.000Z",
       "id": "1"
+    },
+    {
+      "id": "2",
+      "title": "Food",
+      "category": "Food",
+      "amount": 20000,
+      "date": "2025-05-14T23:00:00.000Z"
+    },
+    {
+      "id": "3",
+      "title": "Plantain",
+      "category": "Food",
+      "amount": 4000,
+      "date": "2025-05-13T23:00:00.000Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Food"
+    },
+    {
+      "id": "2",
+      "name": "Bills"
+    },
+    {
+      "id": "3",
+      "name": "Housing"
+    },
+    {
+      "id": "4",
+      "name": "Travel"
+    },
+    {
+      "id": "5",
+      "name": "Leisure"
+    },
+    {
+      "id": "6",
+      "name": "Health"
+    },
+    {
+      "id": "7",
+      "name": "Transportation"
+    },
+    {
+      "id": "8",
+      "name": "Shopping"
+    },
+    {
+      "id": "9",
+      "name": "Education"
+    },
+    {
+      "id": "10",
+      "name": "Pets"
     }
   ]
 }

@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { Expense } from '../models/expense.models';
 
+
 @Component({
   selector: 'app-expense-add-edit',
   imports: [
@@ -36,30 +37,16 @@ import { Expense } from '../models/expense.models';
   styleUrl: './expense-add-edit.component.css',
 })
 export class ExpenseAddEditComponent {
-  expenseService = inject(ExpenseService);
   router = inject(Router);
   snackBar = inject(MatSnackBar);
-  route = inject(ActivatedRoute);
-
-  categories = [
-    'Food',
-    'Bills',
-    'Housing',
-    'Travel',
-    'Leisure',
-    'Health',
-    'Transportation',
-    'Shopping',
-    'Education',
-    'Pets',
-  ];
+  route = inject(ActivatedRoute);  
 
   expenseForm: FormGroup;
 
   isEditMode = false;
   expenseID: number = 0;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, public expenseService: ExpenseService) {
     this.expenseForm = this.fb.group({
       title: ['', Validators.required],
       category: ['', Validators.required],
@@ -75,20 +62,22 @@ export class ExpenseAddEditComponent {
         this.isEditMode = true;
         this.expenseID = +id;
         this.expenseService.getExpenses();
-
-        
       }
     });
 
     effect(() => {
       if (this.isEditMode) {
-      const expenses = this.expenseService.expenses();
-      console.log('Effect triggered. Expenses: ', expenses);
-      if (expenses.length > 0) {
-        this.loadExpenseData(this.expenseID, expenses);
+        const expenses = this.expenseService.expenses();
+        console.log('Effect triggered. Expenses: ', expenses);
+        if (expenses.length > 0) {
+          this.loadExpenseData(this.expenseID, expenses);
+        }
       }
-    }
     });
+  }
+
+  get categoriesList() {
+    return this.expenseService.categories;
   }
 
   loadExpenseData(expenseID: number, expenses: Expense[]) {
@@ -148,5 +137,10 @@ export class ExpenseAddEditComponent {
   onCancel() {
     this.router.navigate(['/dashboard']);
     console.log('Cancelled');
+  }
+
+  navigateToCategories() {
+    this.router.navigate(['/categories']);
+    console.log('Navigated to categories');
   }
 }

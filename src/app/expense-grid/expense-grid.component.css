@@ -8,6 +8,8 @@
 }
 
 .card-header {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 16px; 
   display: flex;
 }
@@ -41,3 +43,8 @@
   min-width: 0;
 }
 
+#add-expense-button {
+  background-color: #4CAF50;
+  min-width: 0;
+
+}

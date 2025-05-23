@@ -1,6 +1,7 @@
 <mat-card class="add-edit-card">
     <mat-card-header>
         <mat-card-title>{{ isEditMode ? 'Edit Expense' : 'Add Expense' }}</mat-card-title>
+        <button mat-flat-button (click)="navigateToCategories()" id="add-category-button">Add Category</button>
     </mat-card-header>
     <mat-card-content>
         <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
@@ -33,7 +34,9 @@
                     <mat-form-field>
                         <mat-label>Select a Category</mat-label>
                         <mat-select formControlName="category" placeholder="Select a Category">
-                            <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+                            <mat-option *ngFor="let category of categoriesList" [value]="category.name">
+                              {{ category.name }}
+                            </mat-option>
                         </mat-select>
                         <mat-error *ngIf="expenseForm.get('category')?.hasError('required')">
                             Select a category

@@ -15,7 +15,7 @@
         </mat-card>
 
         <!-- Total Items Card -->
-        <mat-card class="stat-card">
+        <mat-card class="stat-card" (click)="navigateToExpenses()" matTooltip="Click to view expenses">
           <mat-card-header>
             <mat-card-title>Total Items</mat-card-title>
           </mat-card-header>
@@ -26,15 +26,17 @@
         </mat-card>
 
         <!-- Total Categories Card -->
-        <mat-card class="stat-card">
-          <mat-card-header>
-            <mat-card-title>Total Categories</mat-card-title>
+        
+        <mat-card class="stat-card" (click)="navigatetoCategories()" matTooltip="Click to view categories">
+            <mat-card-header>
+            <mat-card-title>Used Categories</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <div class="stat-value">{{ totalCategories }}</div>
             <mat-icon class="stat-icon">category</mat-icon>
           </mat-card-content>
         </mat-card>
+      
       </div>
 
       <div class="recent-expenses" hidden>

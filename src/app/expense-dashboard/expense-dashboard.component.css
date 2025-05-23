@@ -6,6 +6,10 @@
     flex-wrap: wrap;            
 }
 
+.section-title {
+    margin-left: 4px;       
+}
+
 .stat-card {
     flex: 1;                    
     min-width: 200px;           

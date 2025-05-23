@@ -1,6 +1,6 @@
 import { Component, OnInit, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,11 +9,12 @@ import { ExpenseService } from '../service/expense.service';
 import { Expense } from '../models/expense.models';
 import { catchError, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @Component({
   selector: 'app-expense-dashboard',
-  imports: [MatCardModule, MatTableModule, CommonModule, MatButtonModule, MatIconModule],
+  imports: [MatTooltipModule,RouterModule,MatCardModule, MatTableModule, CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './expense-dashboard.component.html',
   styleUrls: ['./expense-dashboard.component.css']
 })
@@ -57,10 +58,8 @@ export class ExpenseDashboardComponent implements OnInit {
   loadExpenses(): void {
     this.getExpenses().subscribe(() => {
       const expenses = this.expenses();
-      
       console.log('Expenses:', expenses);
-      
-    });
+     });
   }
 
   getExpenseByID(id: number): Expense | undefined {
@@ -76,6 +75,14 @@ export class ExpenseDashboardComponent implements OnInit {
       return of([]); 
     })
   );
-}
+  }
+  
+  navigatetoCategories(){
+    this.router.navigate(['/categories']);
+  }
+
+  navigateToExpenses() {
+    this.router.navigate(['/expense-list']);
+  }
 
 }

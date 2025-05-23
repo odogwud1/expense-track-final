@@ -2,8 +2,37 @@
     margin-right: 8px;
 }
 
+mat-card{
+    margin: auto;
+    width: 360px;
+}
+
+mat-card-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+mat-card-title{
+    margin-top: 8px;
+}
+
+mat-card-content{
+    display: flex;
+    justify-content: center;
+}
+
+mat-card-actions{
+    display: flex;
+    justify-content: center;
+}
+
 .add-edit-card{
     margin: auto;
     max-width: 600px;
     margin-top: 30px;
+}
+
+#add-category-button{
+    background-color: #4CAF50;
 }

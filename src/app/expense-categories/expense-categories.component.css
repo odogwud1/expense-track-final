@@ -1,0 +1,17 @@
+.categories-page{
+    display: flex;
+    width: 100%;
+    gap: 16px; 
+    padding: 16px; 
+    box-sizing: border-box;
+}
+.caegories-list-card{
+    height: 80%;
+}
+
+@media (max-width: 768px) {
+    .categories-page {
+        flex-direction: column;
+    }
+}
+
