@@ -33,15 +33,28 @@
                 <div class="form-row">
                     <mat-form-field>
                         <mat-label>Select a Category</mat-label>
-                        <mat-select formControlName="category" placeholder="Select a Category">
-                            <mat-option *ngFor="let category of categoriesList" [value]="category.name">
+                        <mat-select formControlName="categoryId" placeholder="Select a Category">
+                            <mat-option *ngFor="let category of categoriesList" [value]="category.id">
                               {{ category.name }}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="expenseForm.get('category')?.hasError('required')">
                             Select a category
                         </mat-error>
-                        
+                    </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                    <mat-form-field>
+                        <mat-label>Select the Budget for this Item</mat-label>
+                        <mat-select formControlName="budgetId" placeholder="Select a Budget">
+                            <mat-option *ngFor="let budget of budgetsList" [value]="budget.id">
+                              {{ budget.title }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="expenseForm.get('budgetId')?.hasError('required')">
+                            Budget is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
 

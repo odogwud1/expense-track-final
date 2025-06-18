@@ -1,0 +1,194 @@
+/* Responsive table container */
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.card-header{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  
+}
+
+/* Material table styling */
+.budget-table {
+  width: 100%;
+  min-width: 700px;
+  background: #fff;
+  border-radius: 8px;
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.budget-table th, .budget-table td {
+  padding: 12px 16px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 1rem;
+}
+
+.budget-table th {
+  background: #f5f5f5;
+  font-weight: 500;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.budget-table tr {
+  transition: background 0.2s;
+}
+
+.budget-table tr:hover {
+  background: #f9f9f9;
+}
+
+.action-buttons button {
+  margin-right: 8px;
+  min-width: 70px;
+}
+
+@media (max-width: 900px) {
+  .budget-table, .budget-table th, .budget-table td {
+    font-size: 0.95rem;
+    padding: 8px 8px;
+  }
+  .table-container {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .budget-table, .budget-table th, .budget-table td {
+    font-size: 0.9rem;
+    padding: 6px 4px;
+  }
+  .mat-card-header, .mat-card-title {
+    font-size: 1.1rem;
+  }
+}
+
+.expense-table {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.mat-column-actions {
+  width: 100px;
+  text-align: center;
+}
+
+.mat-row:hover {
+  background-color: #f5f5f5;
+}
+
+#add-budget-button {
+  margin-right: 8px;
+  background-color: #4CAF50;
+  color: white;
+}
+
+#add-budget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#add-budget-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-budget-card {
+  margin: auto;
+  max-width: 360px;
+  margin-top: 30px;
+}
+
+.form-group {
+width: 100%;
+margin-bottom: 16px;
+}
+
+#save-budget-button {
+  background-color: #4CAF50;
+  color: white;
+}
+#back-to-budget-button {
+  margin-left: 8px;
+  background-color: #f44336;
+  color: white;
+}
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.mat-column-total-amount,
+.mat-column-spent-amount,
+.mat-column-remaining-amount,
+.mat-column-end-date,
+.mat-column-start-date {
+  width: 240px;
+  max-width: 240px;
+  padding-right: 8px;
+}
+
+.mat-column-actions{
+  width: 200px;
+  max-width: 200px;
+  text-align: center;
+}
+
+
+.mat-column-total-amount td,
+.mat-column-spent-amount td,
+.mat-column-remaining-amount td {
+  text-align: right;
+}
+
+
+.mat-cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-column-budgetId {
+  width: 100px;
+  max-width: 100px;
+}
+
+.mat-column-title {
+  width: 150px;
+  max-width: 150px;
+}
+
+.mat-cell:hover {
+  overflow: visible;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.mat-cell {
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-column-total-amount,
+.mat-column-spent-amount,
+.mat-column-remaining-amount {
+  text-align: right;
+}
+
+
+
+
+
+

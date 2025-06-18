@@ -1,36 +1,50 @@
 import { Injectable, signal } from '@angular/core';
-import { Expense } from '../models/expense.models';
+import { Expense, Budget, Category } from '../models/expense.models';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExpenseService {
-  categories: { id: number; name: string }[] = [];
-
   private expenseSignal = signal<Expense[]>([]);
+  private budgetSignal = signal<Budget[]>([]);
+  private categorySignal = signal<Category[]>([]);
 
-  constructor(private http: HttpClient) {
-    this.fetchCategories();
+  constructor(private http: HttpClient) {}
+
+  get expenses() {
+    return this.expenseSignal;
   }
 
-  fetchCategories() {
-    this.http
-      .get<{ id: number; name: string }[]>('http://localhost:3000/categories')
-      .subscribe((cats) => (this.categories = cats));
+  get categories() {
+    return this.categorySignal;
   }
 
-  addCategory(name: string) {
-    // Find the next id (json-server does this automatically, but you can omit id)
-    this.http
-      .post<{ id: number; name: string }>('http://localhost:3000/categories', { name })
-      .subscribe(() => this.fetchCategories());
+  get budgets() {
+    return this.budgetSignal;
   }
 
-  deleteCategory(category:{ id:number; name:string} ) {
+  
+
+  getCategories() {
     this.http
-      .delete(`http://localhost:3000/categories/${category.id}`)
-      .subscribe(() => this.fetchCategories());
+      .get<Category[]>('http://localhost:3000/categories')
+      .subscribe((cats) => {
+        console.log('Fetched categories:', cats); // Debugging
+        this.categorySignal.set(cats); // Update the categories array
+      });
+  }
+
+  addCategory(category: Category) {
+    this.http
+      .post<Category[]>('http://localhost:3000/categories',category)
+      .subscribe(() => this.getCategories());
+  }
+
+  deleteCategory(categoryId: number) {
+    this.http
+      .delete(`http://localhost:3000/categories/${categoryId}`)
+      .subscribe(() => this.getCategories());
   }
 
   getExpensesRaw() {
@@ -46,19 +60,17 @@ export class ExpenseService {
       });
   }
 
-  get expenses() {
-    return this.expenseSignal;
-  }
+  
 
   addExpense(expense: Expense) {
     this.http
-      .post('http://localhost:3000/expenses', expense)
+      .post<Expense>('http://localhost:3000/expenses', expense)
       .subscribe(() => this.getExpenses());
   }
 
-  deleteExpense(id: number) {
+  deleteExpense(expenseID: number) {
     this.http
-      .delete(`http://localhost:3000/expenses/${id}`)
+      .delete(`http://localhost:3000/expenses/${Number(expenseID)}`)
       .subscribe(() => this.getExpenses());
   }
 
@@ -66,5 +78,28 @@ export class ExpenseService {
     return this.http
       .put(`http://localhost:3000/expenses/${id}`, updatedExpense)
       .subscribe(() => this.getExpenses());
+  }
+
+  getBudgets() {
+    this.http
+      .get<Budget[]>('http://localhost:3000/budgets')
+      .subscribe((budgets) => {
+        console.log('Fetched expenses:', budgets); // Debugging
+        this.budgetSignal.set(budgets); // Update the signal
+      });
+  }
+
+  
+
+  addBudget(budget: Budget) {
+    this.http
+      .post<Budget>('http://localhost:3000/budgets', budget)
+      .subscribe(() => this.getBudgets());
+  }
+
+  deleteBudget(budgetId: number) {
+    this.http
+      .delete(`http://localhost:3000/budgets/${Number(budgetId)}`)
+      .subscribe(() => this.getBudgets());
   }
 }

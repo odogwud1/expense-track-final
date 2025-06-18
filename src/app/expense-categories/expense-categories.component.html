@@ -1,14 +1,30 @@
 <div class="categories-page">
-<mat-card class="categories-list-card">
-    <mat-card-header>
+<mat-card *ngIf="mode === 'list'" class="categories-list-card">
+    <mat-card-header class="card-header">
         <mat-card-title>Expense Categories</mat-card-title>
+        <button mat-raised-button color="primary" id=add-category-button (click)="showAddCategory()">Add Category</button>
     </mat-card-header>
     
     <mat-card-content>
-        <mat-table [dataSource]="categories" matSort>
+        <mat-table [dataSource]="dataSource" class="categories-table">
+            <ng-container matColumnDef="index">
+                <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                <mat-cell *matCellDef="let category; let i = index">{{ i + 1 }}</mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="category">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
                 <mat-cell *matCellDef="let category">{{ category.name}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="description">>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+                <mat-cell *matCellDef="let category">{{ category.description }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="amount-spent">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Amount Spent</mat-header-cell>
+                <mat-cell *matCellDef="let category">{{ category.amountSpent | currency }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="actions">
@@ -25,27 +41,29 @@
         </mat-table>
     </mat-card-content>
 </mat-card>
-<mat-card class="add-categories-card">
-    <mat-card-header>
+<mat-card *ngIf="mode === 'add'" class="add-category-card">
+    <mat-card-header id="add-category-header">
         <mat-card-title>Add Categories</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-        <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+    <mat-card-content id="add-category-content">
+        <form>
             <div class="form-group">
-                <div class="form-row">
-                    <mat-form-field>
-                        <mat-label>Enter Name of Category</mat-label>
-                        <input matInput formControlName="category" placeholder="Enter Category" />
-                        <mat-error *ngIf="expenseForm.get('category')?.hasError('required')">
-                            New Category is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>  
+                <mat-form-field>
+                    <mat-label>Enter Name of Category</mat-label>
+                    <input matInput [(ngModel)]="newCategory.name" name="name" required placeholder="Enter Name of Category" />
+                </mat-form-field>
+            </div>
+            <div class="form-group">            
+                <mat-form-field>
+                    <mat-label>Enter Description</mat-label>
+                    <input matInput [(ngModel)]="newCategory.description" name="description" required>
+                </mat-form-field>
+            </div>
+            <div class="action-buttons">
+                <button mat-raised-button color="primary" (click)="onSubmit()" id="save-category-button">Add Category</button>
+                <button mat-raised-button color="warn" (click)="showCategoryList()" id="back-to-category-button">Back to List</button>    
+            </div>
         </form>
-    </mat-card-content>     
-    <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="onSubmit()">Add Category</button>    
-    </mat-card-actions>
+    </mat-card-content>  
 </mat-card>            
 </div>                

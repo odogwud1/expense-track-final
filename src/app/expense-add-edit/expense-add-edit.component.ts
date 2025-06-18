@@ -16,7 +16,7 @@ import { ExpenseService } from '../service/expense.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
-import { Expense } from '../models/expense.models';
+import { Budget, Category, Expense } from '../models/expense.models';
 
 
 @Component({
@@ -36,10 +36,12 @@ import { Expense } from '../models/expense.models';
   templateUrl: './expense-add-edit.component.html',
   styleUrl: './expense-add-edit.component.css',
 })
+
+
 export class ExpenseAddEditComponent {
   router = inject(Router);
   snackBar = inject(MatSnackBar);
-  route = inject(ActivatedRoute);  
+  route = inject(ActivatedRoute);
 
   expenseForm: FormGroup;
 
@@ -49,10 +51,14 @@ export class ExpenseAddEditComponent {
   constructor(private fb: FormBuilder, public expenseService: ExpenseService) {
     this.expenseForm = this.fb.group({
       title: ['', Validators.required],
-      category: ['', Validators.required],
+      categoryId: [null, Validators.required],
       amount: [null, [Validators.required, Validators.min(0)]],
       date: ['', Validators.required],
+      budgetId: [null, Validators.required]
     });
+
+    this.expenseService.getCategories();
+    this.expenseService.getBudgets();
 
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
@@ -77,22 +83,39 @@ export class ExpenseAddEditComponent {
   }
 
   get categoriesList() {
-    return this.expenseService.categories;
+    return this.expenseService.categories();
+  }
+
+  get budgetsList() {
+    return this.expenseService.budgets();
   }
 
   loadExpenseData(expenseID: number, expenses: Expense[]) {
-    console.log('All expenses:', this.expenseService.expenses());
     console.log('Looking for ID:', expenseID);
     const expense = expenses.find((e) => Number(e.id) === Number(expenseID));
     console.log('Found expense:', expense);
     if (expense) {
+      let dateObj = null;
+      if (expense.date) {
+        const [day, month, year] = expense.date.split('/');
+        dateObj = new Date(2000 + parseInt(year),parseInt(month) - 1, parseInt(day));
+        console.log('Parsed date:', dateObj);
+      }
+      const selectedBudget = this.budgetsList.find(b => b.id === expense.budgetId);
+      console.log('Selected budget:', selectedBudget);
       this.expenseForm.patchValue({
         title: expense.title,
         amount: expense.amount,
-        category: expense.category,
-        date: expense.date,
+        categoryId: expense.categoryId,
+        budgetId:expense.budgetId ,
+        date: dateObj 
       });
-      console.log('Expense data loaded into form: ', this.expenseForm.value);
+      console.log('Form patched with values:', this.expenseForm.value);
+      console.log(
+        'Current budgetId in form:',
+        this.expenseForm.get('budgetId')?.value
+      );
+      console.log('Available budgets:', this.budgetsList);
     }
   }
 
@@ -108,11 +131,21 @@ export class ExpenseAddEditComponent {
   }
 
   onSubmit() {
-    console.log('Form Submitted');
     if (this.expenseForm.valid) {
+
+      const formValue = { ...this.expenseForm.value };
+      console.log('Form value before processing:', formValue);
+      if (formValue.date) {
+        const dateObj = new Date(formValue.date);
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = String(dateObj.getFullYear()).slice(-2);
+        formValue.date = `${day}/${month}/${year}`;
+      }
+
       const expense: Expense = {
-        ...this.expenseForm.value,
-        id: this.expenseID || Date.now(),
+        ...formValue,
+        id: this.expenseID || this.generateNewId(),
       };
 
       if (this.isEditMode && this.expenseID !== null) {
@@ -124,7 +157,6 @@ export class ExpenseAddEditComponent {
         this.snackBar.open('Expense added successfully');
       }
       this.expenseForm.reset();
-
       this.router.navigate(['/dashboard']);
     }
   }

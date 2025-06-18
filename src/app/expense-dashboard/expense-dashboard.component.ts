@@ -18,7 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   templateUrl: './expense-dashboard.component.html',
   styleUrls: ['./expense-dashboard.component.css']
 })
-export class ExpenseDashboardComponent implements OnInit {
+export class ExpenseDashboardComponent {
 
   expenseService = inject(ExpenseService);
   router = inject(Router);
@@ -29,7 +29,7 @@ export class ExpenseDashboardComponent implements OnInit {
   totalCategories: number = 10;
   expenses = this.expenseService.expenses;
 
-  constructor(private http: HttpClient) {
+  constructor() {
 
     this.expenseService.getExpenses();
     
@@ -37,7 +37,7 @@ export class ExpenseDashboardComponent implements OnInit {
       const expenses = this.expenses();
       this.dataSource.data = expenses;
       this.totalItems = expenses.length;
-      const categories = new Set(expenses.map(e => e.category));
+      const categories = new Set(expenses.map(e => e.categoryId));
       this.totalCategories = categories.size;
       this.totalAmount = expenses.reduce((sum, expense) => {
         const amount = Number(expense.amount);
@@ -51,31 +51,6 @@ export class ExpenseDashboardComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.loadExpenses();
-  }
-
-  loadExpenses(): void {
-    this.getExpenses().subscribe(() => {
-      const expenses = this.expenses();
-      console.log('Expenses:', expenses);
-     });
-  }
-
-  getExpenseByID(id: number): Expense | undefined {
-  const expenses = this.expenses(); 
-  return expenses.find(expense => expense.id === id);
-  } 
- 
-
-  getExpenses(): Observable<Expense[]> {
-  return this.http.get<Expense[]>('http://localhost:3000/expenses').pipe(
-    catchError(error => {
-      console.error('Error loading expenses', error);
-      return of([]); 
-    })
-  );
-  }
   
   navigatetoCategories(){
     this.router.navigate(['/categories']);
@@ -83,6 +58,10 @@ export class ExpenseDashboardComponent implements OnInit {
 
   navigateToExpenses() {
     this.router.navigate(['/expense-list']);
+  }
+
+  navigateToBudgets() {
+    this.router.navigate(['/budget']);  
   }
 
 }

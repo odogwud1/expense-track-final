@@ -2,7 +2,7 @@
     <section class="dashboard-section">
       <h2 class="section-title">Expense Overview</h2>
       
-      <div class="stats-grid">
+      <div class="stats-grid-1">
         
         <mat-card class="stat-card">
           <mat-card-header>
@@ -38,11 +38,22 @@
         </mat-card>
       
       </div>
+      <div class="stats-grid-2">
+        
+        <!-- Total Budget Card -->
+        <mat-card class="stat-card" (click)="navigateToBudgets()" matTooltip="Click to view budgets">
+          <mat-card-header>
+            <mat-card-title>Total Budget</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+          </mat-card-content>
+        </mat-card>
 
       <div class="recent-expenses" hidden>
           <h3 class="subtitle">Recent Expenses</h3>
 
 
+      </div>
       </div>
     </section>
 </div>
