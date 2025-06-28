@@ -62,9 +62,7 @@ export class ExpenseGridComponent implements AfterViewInit {
 
   getBudgetTitle(budgetId: number | null ): string {
     if (!budgetId) return 'No Budget';
-    const budgets = this.expenseService.budgets();
-    const budget = budgets.find(budget => Number(budget.id) === Number(budgetId));
-    return budget ? budget.title : 'No Budget';
+    return this.expenseService.getBudgetTitle(budgetId);
   }
 
   getCategoryTitle(categoryId: number | null): string {

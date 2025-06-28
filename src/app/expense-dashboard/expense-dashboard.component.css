@@ -11,6 +11,10 @@
     margin-left: 4px;       
 }
 
+mat-card {
+  cursor: pointer;   
+}
+
 .stat-card {
     flex: 1;                    
     min-width: 200px;           
@@ -29,3 +33,22 @@
   justify-content: flex-end;
 }
 
+.mini-budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  font-size: 0.95em;
+}
+.mini-budget-table th, .mini-budget-table td {
+  border-bottom: 1px solid #eee;
+  padding: 4px 8px;
+  text-align: left;
+}
+.budget-status.budget-exceeded {
+  color: red;
+  font-weight: bold;
+}
+.budget-status.budget-within-limit {
+  color: green;
+  font-weight: bold;
+}

@@ -33,16 +33,20 @@
 }
 
 /* Ensure columns distribute space evenly */
-.mat-column-id {
-  width: 5%;
+.mat-column-index {
+  width: 2%;
 }
 
 .mat-column-title {
-  width: 20%;
+  width: 10%;
+}
+
+.mat-column-budgetId {
+  width: 12%;
 }
 
 .mat-column-category {
-  width: 15%;
+  width: 10%;
 }
 
 .mat-column-amount {
@@ -50,7 +54,7 @@
 }
 
 .mat-column-date {
-  width: 20%;
+  width: 10%;
 }
 
 .mat-column-actions {

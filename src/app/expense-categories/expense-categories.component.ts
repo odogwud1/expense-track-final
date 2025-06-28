@@ -1,6 +1,6 @@
 import { Component, effect, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,7 +47,7 @@ export class ExpenseCategoriesComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Category>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  displayedColumns: string[] = ['index', 'category', 'description', 'actions'];
+  displayedColumns: string[] = ['index', 'category', 'description','amount-spent','actions'];
 
   newCategory: Category = {
     id: 0,
@@ -61,18 +61,29 @@ export class ExpenseCategoriesComponent implements OnInit {
 
   constructor() {
     this.expenseService.getCategories();
+    this.expenseService.getExpenses();
     effect(() => {
       const categories = this.categories();
-      this.dataSource.data = categories;
+      const expenses = this.expenseService.expenses();
+      this.dataSource.data = categories.map(category => ({...category, amountSpent: expenses
+        .filter(exp => Number(exp.categoryId) === Number(category.id)).reduce((sum, exp) => sum + Number(exp.amount), 0)}))
+      ;
       console.log('Categories updated:', categories);
     });
 
     if (this.paginator) {
       this.paginator.firstPage();
     }
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.mode = 'list';
+      }
+    });
   }
 
   ngOnInit() {
+    this.mode = 'list';
     this.loadCategories();
   }
 

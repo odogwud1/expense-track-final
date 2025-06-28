@@ -19,9 +19,9 @@ export interface Budget {
   amount: number; 
   startDate: string; 
   endDate: string; 
-  duration?: number; 
   spentAmount?: number; 
   remainingAmount?: number; 
+  duration?: string; 
   expenses?: Expense[]; 
 }
 

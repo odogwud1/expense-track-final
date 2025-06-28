@@ -4,6 +4,8 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -36,8 +38,6 @@ import { Budget, Category, Expense } from '../models/expense.models';
   templateUrl: './expense-add-edit.component.html',
   styleUrl: './expense-add-edit.component.css',
 })
-
-
 export class ExpenseAddEditComponent {
   router = inject(Router);
   snackBar = inject(MatSnackBar);
@@ -53,12 +53,23 @@ export class ExpenseAddEditComponent {
       title: ['', Validators.required],
       categoryId: [null, Validators.required],
       amount: [null, [Validators.required, Validators.min(0)]],
-      date: ['', Validators.required],
-      budgetId: [null, Validators.required]
+      date: [{value:'' , disabled: true}, [Validators.required, this.dateValidator]],
+      budgetId: [null, Validators.required],
     });
 
     this.expenseService.getCategories();
     this.expenseService.getBudgets();
+
+    this.expenseForm.get('budgetId')?.valueChanges.subscribe((budgetId) => {
+      const dateControl = this.expenseForm.get('date');
+      if (budgetId) {
+        dateControl?.enable();
+      } else {
+        dateControl?.disable();
+        dateControl?.reset();
+      }
+      dateControl?.updateValueAndValidity();
+    });
 
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
@@ -82,6 +93,33 @@ export class ExpenseAddEditComponent {
     });
   }
 
+  dateValidator=(control: AbstractControl): ValidationErrors | null=>{
+    const dateValue = control.value;
+    if (!dateValue) return null;
+
+    const budgetId = this.expenseForm?.get('budgetId')?.value;
+    if (!budgetId) return {budgetNotSelected: true};
+
+    const budgets = this.expenseService.budgets();
+    const budget = budgets.find((b) => Number(b.id) === Number(budgetId));
+
+    if (!budget) return null;
+
+    const selectedDate = new Date(dateValue);
+    const [startDay, startMonth, startYear] = budget.startDate
+      .split('/')
+      .map(Number);
+    const [endDay, endMonth, endYear] = budget.endDate.split('/').map(Number);
+
+    const budgetStart = new Date(2000 + startYear, startMonth - 1, startDay);
+    const budgetEnd = new Date(2000 + endYear, endMonth - 1, endDay);
+
+    if (selectedDate < budgetStart || selectedDate > budgetEnd) {
+      return { dateOutOfRange: true };
+    }
+    return null;
+  }
+
   get categoriesList() {
     return this.expenseService.categories();
   }
@@ -98,17 +136,23 @@ export class ExpenseAddEditComponent {
       let dateObj = null;
       if (expense.date) {
         const [day, month, year] = expense.date.split('/');
-        dateObj = new Date(2000 + parseInt(year),parseInt(month) - 1, parseInt(day));
+        dateObj = new Date(
+          2000 + parseInt(year),
+          parseInt(month) - 1,
+          parseInt(day)
+        );
         console.log('Parsed date:', dateObj);
       }
-      const selectedBudget = this.budgetsList.find(b => b.id === expense.budgetId);
+      const selectedBudget = this.budgetsList.find(
+        (b) => b.id === expense.budgetId
+      );
       console.log('Selected budget:', selectedBudget);
       this.expenseForm.patchValue({
         title: expense.title,
         amount: expense.amount,
         categoryId: expense.categoryId,
-        budgetId:expense.budgetId ,
-        date: dateObj 
+        budgetId: expense.budgetId,
+        date: dateObj,
       });
       console.log('Form patched with values:', this.expenseForm.value);
       console.log(
@@ -132,7 +176,6 @@ export class ExpenseAddEditComponent {
 
   onSubmit() {
     if (this.expenseForm.valid) {
-
       const formValue = { ...this.expenseForm.value };
       console.log('Form value before processing:', formValue);
       if (formValue.date) {

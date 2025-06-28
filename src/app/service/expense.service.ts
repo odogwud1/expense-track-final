@@ -24,8 +24,6 @@ export class ExpenseService {
     return this.budgetSignal;
   }
 
-  
-
   getCategories() {
     this.http
       .get<Category[]>('http://localhost:3000/categories')
@@ -35,9 +33,41 @@ export class ExpenseService {
       });
   }
 
+  getCategoryTitle(categoryId: number | null): string {
+    if (!categoryId) return 'No Category';
+
+    console.log('Looking for categoryId:', categoryId);
+    const category = this.categories().find(
+      (cat) => Number(cat.id) === Number(categoryId)
+    );
+    console.log('Found category:', category);
+    return category ? category.name : 'No Category';
+  }
+
+  parseDateString(dateStr: string): Date | null {
+    if (!dateStr) return null;
+    const [day, month, year] = dateStr.split('/').map(Number);
+    return new Date(2000 + year, month - 1, day);
+  }
+  
+  getBudgetTitle(budgetId: number | null): string {
+    if (!budgetId) return 'No Budget';
+    const budgets = this.budgets();
+    const budget = budgets.find(
+      (budget) => Number(budget.id) === Number(budgetId)
+    );
+    return budget ? budget.title : 'No Budget';
+  }
+
+  updateBudget(id: number, updatedBudget: Budget) {
+    return this.http
+      .put(`http://localhost:3000/budgets/${id}`, updatedBudget)
+      .subscribe(() => this.getBudgets());
+  }
+
   addCategory(category: Category) {
     this.http
-      .post<Category[]>('http://localhost:3000/categories',category)
+      .post<Category[]>('http://localhost:3000/categories', category)
       .subscribe(() => this.getCategories());
   }
 
@@ -59,8 +89,6 @@ export class ExpenseService {
         this.expenseSignal.set(expenses); // Update the signal
       });
   }
-
-  
 
   addExpense(expense: Expense) {
     this.http
@@ -88,8 +116,6 @@ export class ExpenseService {
         this.budgetSignal.set(budgets); // Update the signal
       });
   }
-
-  
 
   addBudget(budget: Budget) {
     this.http

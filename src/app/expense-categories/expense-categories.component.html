@@ -24,7 +24,7 @@
 
             <ng-container matColumnDef="amount-spent">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Amount Spent</mat-header-cell>
-                <mat-cell *matCellDef="let category">{{ category.amountSpent | currency }}</mat-cell>
+                <mat-cell *matCellDef="let category">{{ category.amountSpent }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="actions">
@@ -56,7 +56,7 @@
             <div class="form-group">            
                 <mat-form-field>
                     <mat-label>Enter Description</mat-label>
-                    <input matInput [(ngModel)]="newCategory.description" name="description" required>
+                    <textarea matInput [(ngModel)]="newCategory.description" name="description" required></textarea>
                 </mat-form-field>
             </div>
             <div class="action-buttons">

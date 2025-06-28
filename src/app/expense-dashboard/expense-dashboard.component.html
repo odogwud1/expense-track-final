@@ -14,7 +14,7 @@
           </mat-card-content>
         </mat-card>
 
-        <!-- Total Items Card -->
+        
         <mat-card class="stat-card" (click)="navigateToExpenses()" matTooltip="Click to view expenses">
           <mat-card-header>
             <mat-card-title>Total Items</mat-card-title>
@@ -25,8 +25,7 @@
           </mat-card-content>
         </mat-card>
 
-        <!-- Total Categories Card -->
-        
+                
         <mat-card class="stat-card" (click)="navigatetoCategories()" matTooltip="Click to view categories">
             <mat-card-header>
             <mat-card-title>Used Categories</mat-card-title>
@@ -40,12 +39,41 @@
       </div>
       <div class="stats-grid-2">
         
-        <!-- Total Budget Card -->
         <mat-card class="stat-card" (click)="navigateToBudgets()" matTooltip="Click to view budgets">
           <mat-card-header>
             <mat-card-title>Total Budget</mat-card-title>
           </mat-card-header>
           <mat-card-content>
+          <div class="left-align">
+            <div class="stat-value">{{ totalBudgets}}</div>
+            <mat-icon class="stat-icon">account_balance_wallet</mat-icon>
+          </div>
+          <div class="right-align">
+            <table class="mini-budget-table table">
+              <thead>
+                <tr>
+                  <th>Budget Name</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let budget of budgets" >
+                  <td>{{ budget?.title }}</td>
+                  <td>{{ budget?.amount | currency:'NGN':'symbol':'1.0-0' }}</td>
+                  <td>
+                    <span class="budget-status"
+                      [ngClass]="{
+                        'budget-exceeded': (budget?.spentAmount ?? 0) > (budget?.amount ?? 0),
+                        'budget-within-limit': (budget?.spentAmount ?? 0) <= (budget?.amount ?? 0)
+                      }">
+                      {{ (budget?.spentAmount ?? 0) > (budget?.amount ?? 0) ? 'Exceeded' : 'Within Limit' }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           </mat-card-content>
         </mat-card>
 

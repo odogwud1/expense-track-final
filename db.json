@@ -3,94 +3,164 @@
     {
       "id": "3",
       "title": "Rice and Chicken",
-      "categoryId": 1,
+      "categoryId": "1",
       "amount": 2900,
       "date": "16/06/25",
-      "budgetId": 2
-    },
-    {
-      "id": "4",
-      "title": "Tripe",
-      "categoryId": 1,
-      "amount": 800,
-      "date": "27/05/25",
-      "budgetId": 1
+      "budgetId": "2"
     },
     {
       "id": "5",
       "title": "Electricity",
-      "categoryId": 3,
+      "categoryId": "3",
       "amount": 90000,
       "date": "16/06/25",
-      "budgetId": 2
+      "budgetId": "2"
     },
     {
       "id": "6",
       "title": "Nike Air Max",
-      "categoryId": 2,
+      "categoryId": "2",
       "amount": 29000,
       "date": "10/06/25",
-      "budgetId": 3
+      "budgetId": "3"
     },
     {
       "id": "7",
       "title": "Water",
-      "categoryId": 1,
+      "categoryId": "1",
       "amount": 500,
       "date": "11/03/25",
-      "budgetId": 4
+      "budgetId": "4"
+    },
+    {
+      "id": "8",
+      "title": "Calaaa",
+      "categoryId": "2",
+      "amount": 90000,
+      "date": "02/07/25",
+      "budgetId": "3"
+    },
+    {
+      "id": "9",
+      "title": "Fuel",
+      "categoryId": "4",
+      "amount": 382000,
+      "date": "09/07/25",
+      "budgetId": "3"
+    },
+    {
+      "id": "10",
+      "title": "Shoes",
+      "categoryId": "2",
+      "amount": 200000,
+      "date": "01/10/25",
+      "budgetId": "5"
+    },
+    {
+      "id": "11",
+      "title": "Transportation Fuel",
+      "categoryId": "4",
+      "amount": 30000,
+      "date": "27/06/25",
+      "budgetId": 8
+    },
+    {
+      "id": "12",
+      "title": "MTN 1TB Plan",
+      "categoryId": 5,
+      "amount": 120000,
+      "date": "27/06/25",
+      "budgetId": 8
     }
   ],
   "categories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Food",
       "description": "Expenses related to food and dining out."
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Shopping",
       "description": "Expenses related to shopping for clothes, electronics, etc."
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Bills",
       "description": "Expenses related to day to day bills."
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Transportation",
       "description": "Expenses related to transportation."
+    },
+    {
+      "id": "5",
+      "name": "Internet Subscription",
+      "description": "Expenses related to the purchase and renewal of internet bundles"
     }
   ],
   "budgets": [
     {
-      "title": "May 2025 Budget",
-      "budgetAmount": 10000,
-      "startDate": "01/05/25",
-      "endDate": "31/05/25",
-      "id": 1
-    },
-    {
-      "id": 2,
+      "id": "2",
       "title": "June Budget",
       "amount": 100000,
       "startDate": "01/06/25",
       "endDate": "30/06/25"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "July 2025 Budget",
       "amount": 500000,
       "startDate": "01/07/25",
-      "endDate": "31/07/25"
+      "endDate": "31/07/25",
+      "spentAmount": 0,
+      "remainingAmount": 500000
     },
     {
-      "id": 4,
+      "id": "4",
+      "title": "March Budget",
       "amount": 4000000,
-      "title": "March BUdget",
       "startDate": "01/03/25",
-      "endDate": "31/03/25"
+      "endDate": "31/03/25",
+      "spentAmount": 0,
+      "remainingAmount": 4000000
+    },
+    {
+      "id": "5",
+      "title": "October 2025 Budget",
+      "amount": 20000,
+      "startDate": "01/10/25",
+      "endDate": "31/10/25",
+      "spentAmount": 0,
+      "remainingAmount": 20000
+    },
+    {
+      "id": "6",
+      "title": "December Budget",
+      "amount": 1000000,
+      "startDate": "01/12/25",
+      "endDate": "31/12/25",
+      "spentAmount": 0,
+      "remainingAmount": 1000000
+    },
+    {
+      "id": "7",
+      "title": "November Budget",
+      "amount": 20000000,
+      "startDate": "01/12/25",
+      "endDate": "31/12/25",
+      "spentAmount": 0,
+      "remainingAmount": 20000000
+    },
+    {
+      "id": "8",
+      "title": "Chika's Mock Budget",
+      "amount": 700000,
+      "startDate": "01/06/25",
+      "endDate": "30/06/25",
+      "spentAmount": 0,
+      "remainingAmount": 700000
     }
   ]
 }
